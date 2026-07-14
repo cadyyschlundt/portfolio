@@ -34,4 +34,34 @@ function classify(point, points, k) {
   return null;
 }
 
-module.exports = { classify };
+function majorityBaseline(points) {
+  if (points.length === 0) return null;
+
+  const counts = new Map();
+  for (const point of points) {
+    counts.set(point.label, (counts.get(point.label) || 0) + 1);
+  }
+
+  let maxCount = 0;
+  for (const count of counts.values()) {
+    if (count > maxCount) maxCount = count;
+  }
+
+  return maxCount / points.length;
+}
+
+function loocvError(points, k) {
+  if (points.length < 2) return null;
+
+  let misclassified = 0;
+  for (let i = 0; i < points.length; i++) {
+    const query = points[i];
+    const others = points.slice(0, i).concat(points.slice(i + 1));
+    const predicted = classify(query, others, k);
+    if (predicted !== query.label) misclassified++;
+  }
+
+  return misclassified / points.length;
+}
+
+module.exports = { classify, majorityBaseline, loocvError };
