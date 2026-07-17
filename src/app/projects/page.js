@@ -10,6 +10,11 @@ export default function ProjectsIndex() {
             k-Nearest Neighbors Playground
           </Link>
         </li>
+        <li>
+          <Link href="/projects/german-credit" className="underline">
+            German Credit Default Risk
+          </Link>
+        </li>
       </ul>
     </main>
   );

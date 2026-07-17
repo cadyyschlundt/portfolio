@@ -1,0 +1,563 @@
+{
+  "claim": "This project claims that a support vector classifier, trained on the German Credit dataset, can distinguish good credit risks from bad ones more effectively than the best trivial rule, once \"effectively\" is defined the way a lender actually cares about it: missing a bad borrower (approving someone who defaults) costs roughly 5 times more than missing a good one (rejecting someone who would have repaid). The baseline is not assumed in advance. Both trivial rules, approve everyone and reject everyone, are scored on this cost-weighted metric, and whichever is cheaper is reported as the baseline the SVC must beat, since accuracy's baseline (70 percent, from predicting the majority class) and the cost-weighted baseline are not guaranteed to be the same rule. All preprocessing, including the feature scaling SVC requires to function at all, is fit on training data only, so the test set cannot leak into the model. Set the bad-credit class as positive, so a false negative is approving a borrower who defaults, the lender's costly error that the 5x weight targets, and a false positive is denying a borrower who would have repaid, the applicant's harm. The fairness audit reports both error rates across age and sex groups, since they are two different fairness questions: false-negative disparity is the lender's risk falling unevenly, false-positive disparity is the applicant's harm falling unevenly. The audit names any group facing a notably higher rate on either error, without claiming a pass, and treats the applicant's harm, the false positive, as the primary fairness concern while still reporting both. Because age is both a predictor and a protected attribute, the audit also checks whether excluding age and sex as inputs changes the disparity, to see whether the model's own use of them is what is driving it.",
+  "baseline": {
+    "cost_rule": "reject everyone",
+    "avg_cost": 0.7,
+    "accuracy_rule": "approve everyone",
+    "accuracy": 0.7,
+    "note": "These are different rules under different metrics that happen to share the same number: reject-everyone minimizes the 5x cost-weighted metric (0.70 avg cost), while approve-everyone maximizes plain accuracy (70%, the majority-class rate). They are not the same baseline."
+  },
+  "model": {
+    "kernel": "linear",
+    "C": 0.01,
+    "class_weight": "balanced",
+    "calibration": "sigmoid",
+    "why_linear": "Linear and RBF cross-validated ROC AUC were within one standard deviation of each other (linear 0.7739 +/- 0.0318 vs RBF 0.7783 +/- 0.0303), so linear was chosen as the simpler model."
+  },
+  "threshold": {
+    "chosen": 0.2,
+    "default": 0.5,
+    "cv_cost_at_chosen": 0.52,
+    "cv_cost_at_default": 0.9957,
+    "pct_improvement_vs_default": 47.78
+  },
+  "cost_curve": {
+    "points": [
+      {
+        "threshold": 0.0,
+        "cost": 0.7
+      },
+      {
+        "threshold": 0.01,
+        "cost": 0.7
+      },
+      {
+        "threshold": 0.02,
+        "cost": 0.7
+      },
+      {
+        "threshold": 0.03,
+        "cost": 0.6957
+      },
+      {
+        "threshold": 0.04,
+        "cost": 0.6829
+      },
+      {
+        "threshold": 0.05,
+        "cost": 0.6657
+      },
+      {
+        "threshold": 0.06,
+        "cost": 0.6457
+      },
+      {
+        "threshold": 0.07,
+        "cost": 0.6229
+      },
+      {
+        "threshold": 0.08,
+        "cost": 0.6
+      },
+      {
+        "threshold": 0.09,
+        "cost": 0.5914
+      },
+      {
+        "threshold": 0.1,
+        "cost": 0.5929
+      },
+      {
+        "threshold": 0.11,
+        "cost": 0.5743
+      },
+      {
+        "threshold": 0.12,
+        "cost": 0.5871
+      },
+      {
+        "threshold": 0.13,
+        "cost": 0.5771
+      },
+      {
+        "threshold": 0.14,
+        "cost": 0.5714
+      },
+      {
+        "threshold": 0.15,
+        "cost": 0.5657
+      },
+      {
+        "threshold": 0.16,
+        "cost": 0.5586
+      },
+      {
+        "threshold": 0.17,
+        "cost": 0.5514
+      },
+      {
+        "threshold": 0.18,
+        "cost": 0.5414
+      },
+      {
+        "threshold": 0.19,
+        "cost": 0.5214
+      },
+      {
+        "threshold": 0.2,
+        "cost": 0.52
+      },
+      {
+        "threshold": 0.21,
+        "cost": 0.5414
+      },
+      {
+        "threshold": 0.22,
+        "cost": 0.55
+      },
+      {
+        "threshold": 0.23,
+        "cost": 0.5557
+      },
+      {
+        "threshold": 0.24,
+        "cost": 0.5714
+      },
+      {
+        "threshold": 0.25,
+        "cost": 0.57
+      },
+      {
+        "threshold": 0.26,
+        "cost": 0.5829
+      },
+      {
+        "threshold": 0.27,
+        "cost": 0.5671
+      },
+      {
+        "threshold": 0.28,
+        "cost": 0.5786
+      },
+      {
+        "threshold": 0.29,
+        "cost": 0.58
+      },
+      {
+        "threshold": 0.3,
+        "cost": 0.6057
+      },
+      {
+        "threshold": 0.31,
+        "cost": 0.6286
+      },
+      {
+        "threshold": 0.32,
+        "cost": 0.6629
+      },
+      {
+        "threshold": 0.33,
+        "cost": 0.6743
+      },
+      {
+        "threshold": 0.34,
+        "cost": 0.6729
+      },
+      {
+        "threshold": 0.35,
+        "cost": 0.6829
+      },
+      {
+        "threshold": 0.36,
+        "cost": 0.7329
+      },
+      {
+        "threshold": 0.37,
+        "cost": 0.7486
+      },
+      {
+        "threshold": 0.38,
+        "cost": 0.7629
+      },
+      {
+        "threshold": 0.39,
+        "cost": 0.7943
+      },
+      {
+        "threshold": 0.4,
+        "cost": 0.8186
+      },
+      {
+        "threshold": 0.41,
+        "cost": 0.8271
+      },
+      {
+        "threshold": 0.42,
+        "cost": 0.8357
+      },
+      {
+        "threshold": 0.43,
+        "cost": 0.8457
+      },
+      {
+        "threshold": 0.44,
+        "cost": 0.8457
+      },
+      {
+        "threshold": 0.45,
+        "cost": 0.8686
+      },
+      {
+        "threshold": 0.46,
+        "cost": 0.9057
+      },
+      {
+        "threshold": 0.47,
+        "cost": 0.9171
+      },
+      {
+        "threshold": 0.48,
+        "cost": 0.9429
+      },
+      {
+        "threshold": 0.49,
+        "cost": 0.9743
+      },
+      {
+        "threshold": 0.5,
+        "cost": 0.9957
+      },
+      {
+        "threshold": 0.51,
+        "cost": 1.0314
+      },
+      {
+        "threshold": 0.52,
+        "cost": 1.0571
+      },
+      {
+        "threshold": 0.53,
+        "cost": 1.07
+      },
+      {
+        "threshold": 0.54,
+        "cost": 1.1014
+      },
+      {
+        "threshold": 0.55,
+        "cost": 1.1029
+      },
+      {
+        "threshold": 0.56,
+        "cost": 1.1229
+      },
+      {
+        "threshold": 0.57,
+        "cost": 1.1429
+      },
+      {
+        "threshold": 0.58,
+        "cost": 1.1586
+      },
+      {
+        "threshold": 0.59,
+        "cost": 1.1857
+      },
+      {
+        "threshold": 0.6,
+        "cost": 1.2129
+      },
+      {
+        "threshold": 0.61,
+        "cost": 1.2314
+      },
+      {
+        "threshold": 0.62,
+        "cost": 1.2614
+      },
+      {
+        "threshold": 0.63,
+        "cost": 1.2857
+      },
+      {
+        "threshold": 0.64,
+        "cost": 1.2886
+      },
+      {
+        "threshold": 0.65,
+        "cost": 1.3157
+      },
+      {
+        "threshold": 0.66,
+        "cost": 1.3486
+      },
+      {
+        "threshold": 0.67,
+        "cost": 1.3571
+      },
+      {
+        "threshold": 0.68,
+        "cost": 1.3757
+      },
+      {
+        "threshold": 0.69,
+        "cost": 1.3829
+      },
+      {
+        "threshold": 0.7,
+        "cost": 1.3957
+      },
+      {
+        "threshold": 0.71,
+        "cost": 1.4014
+      },
+      {
+        "threshold": 0.72,
+        "cost": 1.4157
+      },
+      {
+        "threshold": 0.73,
+        "cost": 1.4286
+      },
+      {
+        "threshold": 0.74,
+        "cost": 1.4343
+      },
+      {
+        "threshold": 0.75,
+        "cost": 1.4471
+      },
+      {
+        "threshold": 0.76,
+        "cost": 1.4529
+      },
+      {
+        "threshold": 0.77,
+        "cost": 1.46
+      },
+      {
+        "threshold": 0.78,
+        "cost": 1.4671
+      },
+      {
+        "threshold": 0.79,
+        "cost": 1.4729
+      },
+      {
+        "threshold": 0.8,
+        "cost": 1.4729
+      },
+      {
+        "threshold": 0.81,
+        "cost": 1.48
+      },
+      {
+        "threshold": 0.82,
+        "cost": 1.4871
+      },
+      {
+        "threshold": 0.83,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.84,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.85,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.86,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.87,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.88,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.89,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.9,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.91,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.92,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.93,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.94,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.95,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.96,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.97,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.98,
+        "cost": 1.5
+      },
+      {
+        "threshold": 0.99,
+        "cost": 1.5
+      },
+      {
+        "threshold": 1.0,
+        "cost": 1.5
+      }
+    ],
+    "markers": {
+      "minimum": {
+        "threshold": 0.2,
+        "cost": 0.52
+      },
+      "default": {
+        "threshold": 0.5,
+        "cost": 0.9957
+      }
+    }
+  },
+  "test_result": {
+    "threshold": 0.2,
+    "confusion": {
+      "TN": 107,
+      "FP": 103,
+      "FN": 9,
+      "TP": 81
+    },
+    "total_cost": 148,
+    "avg_cost": 0.4933,
+    "accuracy": 0.6267,
+    "roc_auc": 0.7991,
+    "beats_baseline": true,
+    "pct_reduction_vs_baseline": 29.5
+  },
+  "fairness": {
+    "frame_note": "Group rates (full_model and dropped_model sex/age tables) are cross-validated out-of-fold predictions across all 1000 rows, refitting per fold, so group sizes are stable. Test costs (test_result above, and dropped_model.test_avg_cost below) are single evaluations on the sealed 300-row test set, opened once each.",
+    "full_model": {
+      "sex": [
+        {
+          "group": "female",
+          "n": 310,
+          "n_good": 201,
+          "fp_rate": 0.5323,
+          "n_bad": 109,
+          "fn_rate": 0.1193
+        },
+        {
+          "group": "male",
+          "n": 690,
+          "n_good": 499,
+          "fp_rate": 0.4389,
+          "n_bad": 191,
+          "fn_rate": 0.1728
+        }
+      ],
+      "age": [
+        {
+          "group": "under_25",
+          "n": 149,
+          "n_good": 88,
+          "fp_rate": 0.6932,
+          "n_bad": 61,
+          "fn_rate": 0.0656
+        },
+        {
+          "group": "25_to_40",
+          "n": 577,
+          "n_good": 410,
+          "fp_rate": 0.4829,
+          "n_bad": 167,
+          "fn_rate": 0.1617
+        },
+        {
+          "group": "over_40",
+          "n": 274,
+          "n_good": 202,
+          "fp_rate": 0.3317,
+          "n_bad": 72,
+          "fn_rate": 0.2083
+        }
+      ]
+    },
+    "dropped_model": {
+      "threshold": 0.19,
+      "test_avg_cost": 0.53,
+      "sex": [
+        {
+          "group": "female",
+          "n": 310,
+          "n_good": 201,
+          "fp_rate": 0.4677,
+          "n_bad": 109,
+          "fn_rate": 0.156
+        },
+        {
+          "group": "male",
+          "n": 690,
+          "n_good": 499,
+          "fp_rate": 0.487,
+          "n_bad": 191,
+          "fn_rate": 0.1204
+        }
+      ],
+      "age": [
+        {
+          "group": "under_25",
+          "n": 149,
+          "n_good": 88,
+          "fp_rate": 0.6591,
+          "n_bad": 61,
+          "fn_rate": 0.082
+        },
+        {
+          "group": "25_to_40",
+          "n": 577,
+          "n_good": 410,
+          "fp_rate": 0.478,
+          "n_bad": 167,
+          "fn_rate": 0.1497
+        },
+        {
+          "group": "over_40",
+          "n": 274,
+          "n_good": 202,
+          "fp_rate": 0.4109,
+          "n_bad": 72,
+          "fn_rate": 0.1389
+        }
+      ]
+    },
+    "comparison_note": "Sex disparity mostly disappeared when the attribute was dropped: the male-female FP-rate gap fell from 0.0934 to 0.0193 (an 80% reduction), consistent with the full model using personal-status/sex fairly directly. Age disparity barely changed: under-25's FP rate went from 0.6932 to 0.6591, still far above the other age bands, indicating other features (employment duration, credit history length, residence duration, existing credit count) act as proxies for age. Removing both attributes also cost real performance: overall test-set average cost rose from 0.4933 to 0.5300, a 7.4% relative increase.",
+    "confounds": "Sex is derived from a field fused with marital status (A92 covers divorced, separated, and married women together, with no female-single category), so any sex gap is confounded with marital status, not attributable to sex alone. Age has no single input to drop cleanly: features like employment duration, credit history length, residence duration, and existing credit count correlate with age and can proxy for it."
+  },
+  "limitations": [
+    "Dataset has only 1000 rows total; group subsets are small and rates are noisy, especially under-25 (n=88 good applicants).",
+    "Sex is derived from a fused personal-status-and-sex field with no female-single category, confounding sex with marital status.",
+    "Age disparity persists after dropping the age feature, likely via correlated proxy features (employment duration, credit history length, residence duration, existing credit count).",
+    "Data collected in Germany in 1994; may not reflect current lending patterns or populations.",
+    "Removing protected attributes increased overall cost by 7.4% relative (0.4933 to 0.5300), a real fairness-performance tradeoff, not a free fix."
+  ]
+}

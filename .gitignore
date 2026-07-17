@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local-only project data
+.vscode/
+analysis/german-credit/german_credit_raw.csv

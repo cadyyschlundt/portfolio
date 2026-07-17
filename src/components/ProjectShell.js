@@ -11,7 +11,7 @@ export default function ProjectShell({
 
       <section className="mt-8">
         <h2 className="text-lg font-semibold">What and why</h2>
-        <p className="mt-2">{whatAndWhy}</p>
+        <div className="mt-2">{whatAndWhy}</div>
       </section>
 
       <section className="mt-8">
@@ -21,12 +21,12 @@ export default function ProjectShell({
 
       <section className="mt-8">
         <h2 className="text-lg font-semibold">Limitations</h2>
-        <p className="mt-2">{limitations}</p>
+        <div className="mt-2">{limitations}</div>
       </section>
 
       <section className="mt-8">
         <h2 className="text-lg font-semibold">What I learned</h2>
-        <p className="mt-2">{whatILearned}</p>
+        <div className="mt-2">{whatILearned}</div>
       </section>
     </main>
   );
